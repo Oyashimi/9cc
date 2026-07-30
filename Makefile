@@ -1,12 +1,33 @@
 CFLAGS=-std=c11 -g -static
 
-chibicc: main.o
-	$(CC) -o $@ $? $(LDFLAGS)
+ifeq ($(shell uname -m),arm64)
+.DEFAULT_GOAL := dtest
+endif
 
-test: chibicc
+9cc: 9cc.c
+
+test: 9cc
 	./test.sh
 
 clean:
-	rm -f chibicc *.o *~ tmp*
+	rm -f 9cc *.o *~ tmp*
 
-.PHONY: test clean
+IMAGE=compilerbook
+DOCKER=docker run --platform linux/amd64 --rm -v "$(CURDIR):/9cc" -w /9cc $(IMAGE)
+
+dtest:
+	$(DOCKER) make test
+
+dbuild:
+	$(DOCKER) make 9cc
+
+dclean:
+	$(DOCKER) make clean
+
+dsh:
+	docker run --platform linux/amd64 --rm -it -v "$(CURDIR):/9cc" -w /9cc $(IMAGE) bash
+
+dimage:
+	docker build --platform linux/amd64 -t $(IMAGE) https://www.sigbus.info/compilerbook/Dockerfile
+
+.PHONY: test clean dtest dbuild dclean dsh dimage
