@@ -1,9 +1,9 @@
 # 9cc C Compiler
 
-ずっとやってみたかった自作系のひとつ、Cコンパイラ編です。
-OSとCPUもいつか作ってみたい！
+ずっとやってみたかった自作シリーズのCコンパイラ編です。
+OSとCPUも作ってみたい。
 
-進捗を書いています: https://oyashimi.com/blog/cs/C_Compiler
+進捗を書いています: https://oyashimi.com/blog/cs/c-compiler/
 
 ---
 
